@@ -1,0 +1,11 @@
+export const n = (v) => Number(v) || 0;
+export const clamp = (x,min,max) => Math.min(max,Math.max(min,x));
+export const round = (x,d=2) => Number(x.toFixed(d));
+export const money = (x,c='USD',locale='en-US') => new Intl.NumberFormat(locale,{style:'currency',currency:c,maximumFractionDigits:2}).format(x);
+export const hours = x => `${round(x,1)} h`;
+export const lines = v => String(v||'').split('\n').map(s=>s.trim()).filter(Boolean);
+export const csv = v => lines(v).map(line=>line.split('|').map(s=>s.trim()));
+export const result = (primary,summary,breakdown=[],notes=[],chart=[]) => ({primary,summary,breakdown,notes,chart});
+export const cents = x => Math.round(n(x)*100);
+export const allocate = (total,weights) => { const sum=weights.reduce((a,b)=>a+b,0); if(sum<=0) throw Error('Allocation weights must add to more than zero.'); const raw=weights.map(w=>total*w/sum); const base=raw.map(Math.floor); let remainder=total-base.reduce((a,b)=>a+b,0); raw.map((x,i)=>({i,frac:x-base[i]})).sort((a,b)=>b.frac-a.frac||a.i-b.i).slice(0,remainder).forEach(({i})=>base[i]++); return base; };
+export const field=(key,label,type='number',value='',opts={})=>({key,label,type,value,...opts});
