@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://markkimotho.github.io/calculator-x/sitemap.xml
