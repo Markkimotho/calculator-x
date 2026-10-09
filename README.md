@@ -1,17 +1,18 @@
 # Calculator X
 
-**There's an X for That.** Calculator X is a static, dependency-free platform of 17 independent calculators for time, money, work, shopping, and everyday life. Each tool has its own directly accessible URL, inputs, calculation module, explanation, and test coverage. The original arithmetic calculator is preserved at `/arithmetic/`.
+**There's an X for That.** Calculator X is a dependency-free web application of 17 independent calculators for time, money, work, shopping, and everyday life. Each tool has its own directly accessible URL, inputs, calculation module, explanation, and test coverage. The original arithmetic calculator is preserved at `/arithmetic/`.
 
 ## Run locally
 
 ```sh
-python3 -m http.server 8000 --directory site
+npm start
 ```
 
-Open `http://localhost:8000`. Run `npm test` for the calculator and arithmetic tests. No install, database, account, or paid API is required. GitHub Actions tests on pull requests and publishes `site/` to GitHub Pages on `main`.
+Open `http://localhost:10000`. The Node server serves the calculator pages and exposes `/api/health` and `/api/catalog`. Run `npm test` and `npm run build` before deployment. No database, account, or paid API is required. GitHub Actions checks tests and the build on pushes and pull requests.
 
 ## Architecture
 
+- `server.js`: Node HTTP server, direct-route delivery, API endpoints, and deployment-aware SEO URLs.
 - `site/registry.js`: typed-by-convention catalogue used for search, categories, cards, related tools, and routes.
 - `site/features/<slug>.js`: each tool's documented fields, methodology, and pure calculation function.
 - `site/lib/helpers.js`: formatting, rounding, and integer-cent allocation.
@@ -21,6 +22,10 @@ Open `http://localhost:8000`. Run `npm test` for the calculator and arithmetic t
 - `test/`: engine and edge-case tests.
 
 To add a calculator, create a feature module exporting `fields`, `methodology`, and `calculate`; add it to `registry.js`; create its route `index.html`; add tests and the route to the sitemap. `calculate(values)` returns `{primary, summary, breakdown, notes, chart}`. Use integer cents for bill reconciliation.
+
+## Render deployment
+
+Deploy as a **Node web service** from this repository’s `main` branch. Set the build command to `npm test && npm run build`, the start command to `npm start`, and the health check path to `/api/health`. The server binds to Render’s `PORT` on `0.0.0.0`. `PUBLIC_ORIGIN` is optional; when omitted, canonical URLs and the sitemap use the request host. Saved scenarios remain in each user’s browser; the server does not store them.
 
 ## Privacy and limits
 
