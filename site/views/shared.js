@@ -1,0 +1,10 @@
+import {fields,esc,metric,find,bars,chart} from '../ui/utils.js';
+export const group=(title,body,detail='')=>`<fieldset class="input-group"><legend>${esc(title)}</legend>${detail?`<p class="group-detail">${esc(detail)}</p>`:''}<div class="input-grid">${body}</div></fieldset>`;
+export const pick=(all,keys)=>fields(all,keys);
+export const highlight=(label,value,extra='')=>`<div class="result-highlight"><span class="eyebrow">${esc(label)}</span><strong>${esc(value)}</strong>${extra?`<p>${esc(extra)}</p>`:''}</div>`;
+export const details=(result,labels)=>`<div class="detail-grid">${labels.map(label=>metric(label,find(result,label))).join('')}</div>`;
+export const comparison=(result)=>chart(result);
+export const axis=(labels)=>`<div class="visual-axis">${labels.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`;
+export const title=(text)=>`<h3 class="visual-title">${esc(text)}</h3>`;
+export const pill=(text)=>`<span class="visual-pill">${esc(text)}</span>`;
+export const timeline=(items)=>`<div class="visual-timeline">${items.map((item,i)=>`<div class="timeline-point"><i>${i+1}</i><b>${esc(item[0])}</b><span>${esc(item[1])}</span></div>`).join('')}</div>`;

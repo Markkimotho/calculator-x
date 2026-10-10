@@ -1,0 +1,6 @@
+import {group,pick,highlight,details,title} from './shared.js';
+import {num,bars} from '../ui/utils.js';
+export const layout='story';export const mark='⌕';export const formTitle='How deep is the rabbit hole?';export const lede='A good deal has a cost when the search takes longer than the saving.';export const action='Find my stopping point';
+export const form=all=>`${group('The thing you are researching',pick(all,['price','savings']))}${group('The time you are spending',pick(all,['research','additional','hourly']))}`;
+export const preview=v=>{const timeValue=(num(v.research)+num(v.additional))*num(v.hourly),price=num(v.price),share=price?Math.min(100,timeValue/price*100):0;return `${title('The search meter')}<div class="research-meter"><div class="meter-price" style="left:${price?95:0}%"><span>PRODUCT PRICE</span></div><div class="meter-fill" style="width:${share}%"></div></div><div class="research-meter-label"><span>Time value: ${Math.round(timeValue)}</span><span>Product: ${price}</span></div>`};
+export const result=r=>`${highlight('STOPPING POINT',r.primary,r.summary)}${details(r,['Research time value so far','Planned total time value','Break-even total research time','Share of product price'])}${bars(r.chart||[])}`;
