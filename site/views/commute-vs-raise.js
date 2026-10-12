@@ -1,0 +1,6 @@
+import {pick,highlight,details,title} from './shared.js';
+import {esc,bars,find} from '../ui/utils.js';
+export const layout='comparison';export const mark='⇄';export const formTitle='Put both jobs side by side';export const lede='The better salary may look different after travel time and cost.';export const action='Compare the jobs';
+export const form=all=>`<div class="job-grid">${['A','B'].map(p=>`<div class="job-panel"><span class="option-label">JOB ${p}</span><div class="input-grid">${pick(all,[`${p}name`,`${p}salary`,`${p}hours`,`${p}days`,`${p}commute`,`${p}transport`,`${p}vehicle`,`${p}remote`,`${p}other`,`${p}benefits`])}</div></div>`).join('')}</div>`;
+export const preview=v=>`${title('A working week, compared')}<div class="commute-roads"><div><span>${esc(v.Aname||'Job A')}</span><i style="width:${Math.min(100,Number(v.Acommute)||0)}%"></i><b>${esc(v.Acommute)} min each way</b></div><div><span>${esc(v.Bname||'Job B')}</span><i style="width:${Math.min(100,Number(v.Bcommute)||0)}%"></i><b>${esc(v.Bcommute)} min each way</b></div></div>`;
+export const result=r=>`${highlight('ANNUAL NET COMPARISON',r.primary,r.summary)}${bars(r.chart||[])}${details(r,r.breakdown.filter(x=>/effective hourly value|commute hours|commute cost|break-even salary/.test(x[0])).map(x=>x[0]))}`;
