@@ -1,0 +1,6 @@
+import {group,pick,highlight,details,title} from './shared.js';
+import {esc,find} from '../ui/utils.js';
+export const layout='conversation';export const mark='♡';export const formTitle='Read the message, not the mind';export const lede='A calmer way to look at a text that feels hard to read.';export const action='Look at other readings';
+export const form=all=>`<div class="message-editor"><span class="option-label">THE MESSAGE</span>${pick(all,['message'])}</div>${group('What you know about the situation',pick(all,['delay','habits','context']))}<p class="privacy-note">Your message is processed here in your browser and is not saved by default.</p>`;
+export const preview=v=>`${title('The conversation')}<div class="message-thread"><div class="incoming-bubble">${esc(v.message)||'Your message will appear here.'}</div><span>Response delay: ${esc(v.delay)} hours</span></div>`;
+export const result=r=>`${highlight('A MORE GENEROUS READING',r.primary,r.summary)}<div class="interpretation-cards"><div><span>01</span><b>It may simply be brief.</b></div><div><span>02</span><b>They may be busy.</b></div><div><span>03</span><b>They may want to talk later.</b></div></div><div class="clarification-bubble"><span>IF YOU WANT TO ASK</span><p>“Hey, I might be reading too much into this. Are we okay?”</p></div>${details(r,['Missing context'])}`;

@@ -1,0 +1,6 @@
+import {group,pick,highlight,details,title} from './shared.js';
+import {num,esc,bars,find} from '../ui/utils.js';
+export const layout='dashboard';export const mark='◫';export const formTitle='A quick daily check-in';export const lede='Name the load you are carrying, then plan a pause that fits.';export const action='Check my load';
+export const form=all=>`${group('Decision load',pick(all,['decisions','difficulty','work']))}${group('Recovery & current energy',pick(all,['breaks','energy','sleep']))}`;
+export const preview=v=>`${title('Today’s energy dial')}<div class="energy-dial" style="--energy:${Math.max(0,Math.min(10,num(v.energy)))*10}%"><strong>${esc(v.energy)}<small>/10</small></strong><span>self-rated energy</span></div><div class="load-ticks">${Array.from({length:10},(_,i)=>`<i class="${i<num(v.difficulty)?'on':''}"></i>`).join('')}</div><p class="visual-caption">Difficulty is your own rating, not a clinical score.</p>`;
+export const result=r=>`${highlight('PERSONAL LOAD INDEX',r.primary,r.summary)}${bars([['Decisions',Number(find(r,'Decision contribution'))],['Work',Number(find(r,'Work contribution'))],['Break offset',Number(find(r,'Break offset'))]])}${details(r,['Decision contribution','Work contribution','Break offset','Suggested check-in interval'])}`;
