@@ -16,12 +16,14 @@ Open `http://localhost:10000`. The Node server serves the calculator pages and e
 - `site/registry.js`: typed-by-convention catalogue used for search, categories, cards, related tools, and routes.
 - `site/features/<slug>.js`: each tool's documented fields, methodology, and pure calculation function.
 - `site/lib/helpers.js`: formatting, rounding, and integer-cent allocation.
-- `site/app.js`: shared discovery, form, result, saved-scenario, sharing, and theme UI.
+- `site/ui/`: global shell, discovery page, form primitives, scenario controls, sharing, and theme behavior.
+- `site/views/<slug>.js`: an independent UI composition for each calculator, including its controls, preview, and result layout.
+- `site/style.css`: light and dark design tokens, shared primitives, category accents, responsive layouts, and purposeful visualizations.
 - `site/calculators/<slug>/index.html`: dedicated static route with unique title, description, and canonical URL.
 - `site/sitemap.xml`: published calculator routes.
 - `test/`: engine and edge-case tests.
 
-To add a calculator, create a feature module exporting `fields`, `methodology`, and `calculate`; add it to `registry.js`; create its route `index.html`; add tests and the route to the sitemap. `calculate(values)` returns `{primary, summary, breakdown, notes, chart}`. Use integer cents for bill reconciliation.
+To add a calculator, create a feature module exporting `fields`, `methodology`, and `calculate`; create a matching view module exporting `form`, `preview`, and `result`; add it to `registry.js`; create its route `index.html`; add tests and the route to the sitemap. `calculate(values)` returns `{primary, summary, breakdown, notes, chart}`. Use integer cents for bill reconciliation.
 
 ## Render deployment
 
@@ -32,3 +34,7 @@ Deploy as a **Node web service** from this repository’s `main` branch. Set the
 Scenarios save in browser local storage only when a user chooses Save. Sensitive text and wellness tools do not offer saving or input-bearing share links. Shareable links for other tools encode inputs in the URL, so they should not be used for private information. Currency selection changes formatting, not exchange rates. Subjective tools are user-assumption planning aids, not diagnoses or scientific predictions. The furniture turn check is a simplified 2D model. Food guidance is conservative and cannot verify actual handling conditions.
 
 Food-storage rules reference [FoodSafety.gov's cold storage chart](https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts) and [FDA refrigerator guidance](https://www.fda.gov/food/buy-store-serve-safe-food/refrigerator-thermometers-cold-facts-about-food-safety).
+
+## Design system
+
+The UI follows a Minimal Utility × Playful Editorial direction. Warm neutral surfaces, a strong green X mark, Plus Jakarta Sans headings, Inter interface text, and DM Mono numerical values form the shared identity. Six category accents add context without replacing the global palette. Light and dark modes use separate tokens. The homepage uses an editorial featured grid, category discovery, and a searchable directory. Each calculator has a dedicated view module and a presentation chosen for its task: comparisons, timelines, dashboards, a receipt, an invoice, a message thread, a report, or an SVG geometry workspace. Shared form and result primitives keep spacing, input behavior, and accessibility consistent. Motion is restrained and disabled for reduced-motion preferences.
