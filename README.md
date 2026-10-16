@@ -2,6 +2,8 @@
 
 **There's an X for That.** Calculator X is a dependency-free web application of 17 independent calculators for time, money, work, shopping, and everyday life. Each tool has its own directly accessible URL, inputs, calculation module, explanation, and test coverage. The original arithmetic calculator is preserved at `/arithmetic/`.
 
+**Live app:** [calculator-x-qcvh.onrender.com](https://calculator-x-qcvh.onrender.com/)
+
 ## Run locally
 
 ```sh
@@ -27,7 +29,7 @@ To add a calculator, create a feature module exporting `fields`, `methodology`, 
 
 ## Render deployment
 
-Deploy as a **Node web service** from this repository’s `main` branch. Set the build command to `npm test && npm run build`, the start command to `npm start`, and the health check path to `/api/health`. The server binds to Render’s `PORT` on `0.0.0.0`. `PUBLIC_ORIGIN` is optional; when omitted, canonical URLs and the sitemap use the request host. Saved scenarios remain in each user’s browser; the server does not store them.
+Deploy as a **Node web service** from this repository’s `main` branch. Set the build command to `npm test && npm run build`, the start command to `npm start`, and the health check path to `/api/health`. The server binds to Render’s `PORT` on `0.0.0.0`. The production service sets `PUBLIC_ORIGIN=https://calculator-x-qcvh.onrender.com` so canonical URLs and the sitemap consistently use the live address. This address persists across deploys of the same Render service; a user-owned custom domain would also survive replacing the service. Saved scenarios remain in each user’s browser; the server does not store them.
 
 ## Privacy and limits
 

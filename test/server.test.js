@@ -14,7 +14,8 @@ test('web server serves direct routes, SEO metadata, and health endpoint',async(
     assert.equal((await catalog.json()).length,17);
     const page=await fetch(base+'/calculators/dinner-split/');
     assert.equal(page.status,200);
-    assert.match(await page.text(),/canonical.*127\.0\.0\.1/);
+    const canonicalOrigin=process.env.PUBLIC_ORIGIN||base.replace('http://127.0.0.1','https://127.0.0.1');
+    assert.ok((await page.text()).includes(`href="${canonicalOrigin}/calculators/dinner-split/"`));
     const script=await fetch(base+'/features/dinner-split.js');
     assert.equal(script.status,200);
     assert.match(script.headers.get('content-type'),/javascript/);
